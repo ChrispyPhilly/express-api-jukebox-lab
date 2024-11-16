@@ -1,7 +1,9 @@
+// server.js
+require('dotenv').config();  // Add this line at the top of your file
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const methodOverride = require('method-override');
 const trackRoutes = require('./routes/tracks');
 
 // Create the app
@@ -10,10 +12,11 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(methodOverride('_method'));
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost/reactville-jukebox', {
+const dbURI = process.env.MONGODB_URI || 'mongodb://localhost/reactville-jukebox';  // Fallback to default URI if not found in .env
+
+mongoose.connect(dbURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => {
