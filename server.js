@@ -1,16 +1,17 @@
-require('dotenv').config();  
-
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const trackRoutes = require('./routes/tracks'); // Correct import path
+const trackRoutes = require('./routes/tracks'); // Import the track routes
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-const dbURI = process.env.MONGODB_URI || 'mongodb://localhost/reactville-jukebox';  // Default to local database if no env variable
+const dbURI = process.env.MONGODB_URI || 'mongodb://localhost/reactville-jukebox'; // Default to local database if no env variable
+
+
 mongoose.connect(dbURI)
   .then(() => {
     console.log('Connected to MongoDB');
@@ -19,15 +20,6 @@ mongoose.connect(dbURI)
     console.error('Error connecting to MongoDB:', err);
   });
 
-
-mongoose.connect(dbURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
-  console.log('Connected to MongoDB');
-}).catch((err) => {
-  console.error('Error connecting to MongoDB:', err);
-});
 
 app.use('/api', trackRoutes);
 
