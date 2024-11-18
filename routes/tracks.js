@@ -80,7 +80,7 @@ router.put('/tracks/:id', async (req, res) => {
       const trackId = req.params.id;
       const { title, artist } = req.body;
   
-      /
+      
       if (!title || !artist) {
         return res.status(400).json({ message: 'Title and artist are required' });
       }
@@ -131,3 +131,6 @@ router.delete('/tracks/:id', async (req, res) => {
       });
     }
   });
+
+  // Export the router
+module.exports = router;
